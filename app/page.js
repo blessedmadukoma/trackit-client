@@ -35,27 +35,19 @@ export default function Home() {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "Data Overview",
       },
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  const labels = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
   const data = {
     labels,
     datasets: [
       {
         fill: true,
-        label: "Dataset 2",
+        label: "Transactions",
         data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -69,22 +61,22 @@ export default function Home() {
 
       <h1 className="text-2xl font-semibold tracking-wider">Welcome, Jacob</h1>
 
-      <div className="mt-6 flex justify-center space-x-8 rounded-lg bg-white py-4 text-gray-900">
-        <section class="flex flex-col items-center">
+      <div className="mt-6 flex justify-center space-x-10 rounded-lg bg-white py-4 text-gray-900">
+        <section class="flex cursor-pointer flex-col items-center">
           <div class="flex h-20 w-20 justify-center rounded-full bg-red-100">
             <img src="assets/minus.svg" alt="Expense" />
           </div>
           <span class="mt-2 block tracking-wide ">Add expense</span>
         </section>
 
-        <section class="flex flex-col items-center">
+        <section class="flex cursor-pointer flex-col items-center">
           <div class="flex h-20 w-20 justify-center rounded-full bg-green-100">
             <img src="assets/plus.svg" alt="Income" />
           </div>
           <span class="mt-2 block tracking-wide">Add income</span>
         </section>
 
-        <section class="flex flex-col items-center">
+        <section class="flex cursor-pointer flex-col items-center">
           <div class="flex h-20 w-20 justify-center rounded-full bg-blue-100">
             <img src="assets/wallet.svg" alt="Budget" />
           </div>
