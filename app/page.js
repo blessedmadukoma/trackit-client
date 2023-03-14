@@ -1,7 +1,68 @@
+"use client";
 // import Image from 'next/image'
 import Header from "./components/Header";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
 
 export default function Home() {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Line Chart",
+      },
+    },
+  };
+
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: true,
+        label: "Dataset 2",
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
+
   return (
     <main className="mx-12 my-5">
       <Header />
@@ -32,7 +93,7 @@ export default function Home() {
       </div>
 
       {/* balance and details section */}
-      <section class="mt-10 mb-14 flex space-x-6 capitalize text-gray-900">
+      <section class="mt-6 mb-10 flex space-x-6 capitalize text-gray-900">
         <section class="w-1/5 rounded-lg bg-white p-4">
           <span class="block text-sm">Total Balance</span>
           <div class="flex items-center">
@@ -79,8 +140,8 @@ export default function Home() {
       <section class="flex space-x-6 text-gray-900">
         <section class="w-1/2 rounded-lg bg-white p-4">
           <span class="block tracking-wide">Transaction history</span>
-          <span class="block text-sm text-gray-400 pt-4">Today</span>
-          <div class="flex items-center justify-between mt-2">
+          <span class="block pt-4 text-sm text-gray-400">Today</span>
+          <div class="mt-2 flex items-center justify-between">
             <div class="flex space-x-3">
               <img src="./assets/svg/total-balance.svg" alt="" />
               <div>
@@ -88,7 +149,7 @@ export default function Home() {
                 <span class="block">02:00 PM</span>
               </div>
             </div>
-            <span class="text-green-500 text-md">&#8358; 100,000</span>
+            <span class="text-md text-green-500">&#8358; 100,000</span>
           </div>
 
           {/* <div class="flex items-center justify-center">
@@ -97,8 +158,8 @@ export default function Home() {
         </section>
         <section class="w-1/2 rounded-lg bg-white p-4">
           {/* <span class="block tracking-wide">Data Overview</span> */}
-          <p>Lol</p>
           {/* <canvas id="chart2"></canvas> */}
+          <Line options={options} data={data} />;
         </section>
       </section>
     </main>
