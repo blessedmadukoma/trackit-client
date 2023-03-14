@@ -6,4 +6,4 @@
 2. Setup Tailwindcss and Favicon: 
    - pnpm install -D tailwindcss postcss autoprefixer --save 
    - pnpm tailwindcss init -p
-3. 
+3. Set up sidebar component
