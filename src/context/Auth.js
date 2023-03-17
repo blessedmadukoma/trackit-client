@@ -73,6 +73,7 @@ export const AuthProvider = ({ children }) => {
     // }
     loadUserFromCookies();
   }, []);
+
   async function loadUserFromCookies() {
     const token = Cookies.get("konetBillingAdmin");
 
@@ -101,12 +102,13 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (userData) => {
     setLoading(true);
+    console.log("I am here...");
     try {
-      await login(userData);
-      await loadUserFromCookies();
-      // console.log("Logged in", user);
+      // // await login(userData);
+      // // await loadUserFromCookies();
+      console.log("Logged in", userData);
       toast.success("Logged in");
-      // router.push("/admin");
+      router.push("/dashboard");
     } catch (err) {
       setLoading(false);
       toast.error("Invalid credentials");
@@ -125,10 +127,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = async () => {
+    setLoading(true);
     await logout();
     // Cookies.remove("konetBillingAdmin");
     setUser(null);
-    router.push("/login");
+    setLoading(false);
+    router.push("../auth/login");
     success("Logged out");
   };
 
@@ -157,7 +161,7 @@ export const ProtectRoute = ({ children }) => {
   const router = useRouter();
 
   if (!isAuthenticated) {
-    router.push("/login");
+    router.push("/auth/login");
     return null;
   }
 

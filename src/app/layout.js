@@ -1,6 +1,6 @@
 import "./globals.css";
 
-// import { AuthProvider, ProtectRoute } from "@/src/context/Auth";
+import { AuthProvider, ProtectRoute } from "@/src/context/Auth";
 import { isMobile } from "react-device-detect";
 
 export const metadata = {
@@ -13,20 +13,20 @@ const RootLayout = ({ children }) => {
     return (
       <html lang="en">
         <body>
-          <div className="grid text-xs min-h-screen place-items-center">
+          <main className="grid text-xs min-h-screen place-items-center">
             <h1>TrackIT</h1>
             <p>TrackIT is not supported on mobile devices.</p>
-          </div>
+          </main>
         </body>
       </html>
     );
   }
   return (
     <html lang="en">
-      <body className="bg-[#F1F1F4]">{children}</body>
-      {/* <body>
+      {/* <body className="bg-[#F1F1F4]">{children}</body> */}
+      <body>
         <AuthProvider>{children}</AuthProvider>
-      </body> */}
+      </body>
     </html>
   );
 };

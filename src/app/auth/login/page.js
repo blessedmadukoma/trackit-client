@@ -1,6 +1,42 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import { useAuth } from "../../../context/Auth";
 
 const LogIn = () => {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user, handleLogin, isAuthenticated, load } = useAuth();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = formData;
+
+  const loginForm = new FormData();
+  loginForm.append("email", email);
+  loginForm.append("password", password);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    handleLogin(loginForm);
+    console.log(loading);
+    setLoading(false);
+    console.log(loading);
+    console.log("user:", formData);
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <main className="mt-10 flex max-h-screen w-full items-center justify-center p-8">
       {/* left side */}
@@ -11,35 +47,46 @@ const LogIn = () => {
           <h4 className="font-medium tracking-wide">Login into your account</h4>
         </div>
 
-        <div>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Email Address"
-            className="w-3/4 rounded-md p-3"
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="items-center space-y-10">
+          <div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email Address"
+              required
+              className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
+              value={email}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            className="w-3/4 rounded-lg p-3"
-          />
-        </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              placeholder="Password"
+              className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
+              value={password}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div className="items-end">
-          <a href="#" className="font-light underline">
-            Forgot password?
-          </a>
-        </div>
+          <div className="items-end">
+            <a href="#" className="font-light underline">
+              Forgot password?
+            </a>
+          </div>
 
-        <button className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white">
-          Login
-        </button>
+          <button
+            type="submit"
+            className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white"
+          >
+            {loading ? "Please wait..." : "Login"}
+          </button>
+        </form>
       </section>
 
       {/* right side */}
@@ -55,7 +102,7 @@ const LogIn = () => {
         </div>
 
         <Link href="/auth/register" className="w-full">
-          <button className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white">
+          <button className="w-1/2 rounded-lg p-3 font-semibold tracking-wider text-[#7C4CE0] outline outline-2 outline-[#7C4CE0]">
             Register
           </button>
         </Link>

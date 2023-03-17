@@ -16,7 +16,7 @@ const LogIn = () => {
         </div>
 
         <Link href="/auth/login" className="w-full">
-          <button className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white">
+          <button className="w-1/2 rounded-lg outline outline-2 outline-[#7C4CE0] p-3 font-semibold tracking-wider text-[#7C4CE0]">
             Login
           </button>
         </Link>
@@ -24,7 +24,7 @@ const LogIn = () => {
 
       {/* right side */}
       <section className="w-1/2 items-center space-y-8 text-center ml-10">
-        <div className="space-y-6 text-gray-900">
+        <div className="space-y-4 text-gray-900">
           <h2 className="text-2xl font-semibold">Create Account</h2>
 
           <h4 className="font-normal tracking-wide">
@@ -38,7 +38,7 @@ const LogIn = () => {
             id="firstname"
             name="firstname"
             placeholder="First Name"
-            className="w-3/4 rounded-md p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -48,7 +48,7 @@ const LogIn = () => {
             id="lastname"
             name="lastname"
             placeholder="Last Name"
-            className="w-3/4 rounded-md p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -58,7 +58,7 @@ const LogIn = () => {
             id="email"
             name="email"
             placeholder="Email Address"
-            className="w-3/4 rounded-md p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -68,7 +68,7 @@ const LogIn = () => {
             id="phone"
             name="phone"
             placeholder="Phone Number"
-            className="w-3/4 rounded-md p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -78,7 +78,7 @@ const LogIn = () => {
             id="password"
             name="password"
             placeholder="Password"
-            className="w-3/4 rounded-lg p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -88,7 +88,7 @@ const LogIn = () => {
             id="confirm"
             name="confirm"
             placeholder="Confirm Password"
-            className="w-3/4 rounded-lg p-3"
+            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
           />
         </div>
 

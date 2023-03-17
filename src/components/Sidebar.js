@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { MdSpaceDashboard, MdAccountBalanceWallet } from "react-icons/md";
@@ -5,16 +6,20 @@ import { FaChartArea } from "react-icons/fa";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { BsCreditCardFill } from "react-icons/bs";
+import { useAuth } from "../context/Auth";
 
 // const Sidebar = ({ prop, active }) => {
 //   console.log(active);
 const Sidebar = () => {
+  const { handleLogout, loading } =
+    useAuth();
+
   return (
-    <div className="flex h-screen flex-col justify-between border-r-[1px]">
+    <main className="flex h-screen flex-col justify-between border-r-[1px]">
       <section className="flex flex-col font-medium text-[#5C5C5C]">
         {/* <Link href="/" onClick={() => prop()}> */}
         <Link href="/">
-          <div className="flex rounded-lg p-8 text-[#7C4CE0]">
+          <section className="flex rounded-lg p-8 text-[rgb(124,76,224)]">
             <img
               src="https://res.cloudinary.com/dqjowwy5k/image/upload/v1678804356/trackit/logo.svg"
               alt="Logo"
@@ -23,7 +28,7 @@ const Sidebar = () => {
             <div>
               <span className="block text-2xl">TrackIT</span>
             </div>
-          </div>
+          </section>
         </Link>
         <div className="mt-12">
           <Link href="/">
@@ -71,15 +76,14 @@ const Sidebar = () => {
             </div>
           </Link>
 
-          <Link href="#">
-            <div className="mt-2 flex items-center rounded-lg py-3 px-8">
-              <RiLogoutCircleRFill className="mr-2" />
-              <p className="mr-2">Logout</p>
-            </div>
-          </Link>
+          <div className="mt-2 flex items-center rounded-lg py-3 px-8">
+            <RiLogoutCircleRFill className="mr-2" />
+            {/* <p className="mr-2">Logout</p> */}
+            <button className="mr-2" onClick={handleLogout}>{loading ? "Logging out..." : "Logout"}</button>
+          </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 
