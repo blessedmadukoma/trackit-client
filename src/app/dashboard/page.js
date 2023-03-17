@@ -1,6 +1,6 @@
 "use client";
 // import Image from 'next/image'
-import Header from "./components/Header";
+import Header from "../../components/Header";
 import {
   Chart as ChartJS,
   CategoryScale,

@@ -13,4 +13,7 @@
 5. Updated sidebar and finished dashboard UI
 6. Installed chartjs, faker and updated dashboard to use chartjs:
    - `pnpm add chart.js react-chartjs-2 --save`
-   - `pnpm add faker`
+   - `pnpm add @faker-js/faker`
+7. Restructured codebase, added `react-device-detect` to detect the device used:
+   - `pnpm install react-device-detect --save`
+8. Fixed layout, updated landing page, fixed register and login pages
