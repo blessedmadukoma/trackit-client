@@ -135,10 +135,12 @@ export default function Home() {
           <span class="block pt-4 text-sm text-gray-400">Today</span>
           <div class="mt-2 flex items-center justify-between">
             <div class="flex space-x-3">
-              <img src="./assets/svg/total-balance.svg" alt="" />
-              <div>
+              <img src="assets/total-balance.svg" alt="balance" />
+              <div className="flex flex-col justify-between">
                 <span class="block">income</span>
-                <span class="block">02:00 PM</span>
+                <span class="block text-sm font-medium tracking-wider text-gray-400">
+                  02:00 PM
+                </span>
               </div>
             </div>
             <span class="text-md text-green-500">&#8358; 100,000</span>
@@ -151,7 +153,7 @@ export default function Home() {
         <section class="w-1/2 rounded-lg bg-white p-4">
           {/* <span class="block tracking-wide">Data Overview</span> */}
           {/* <canvas id="chart2"></canvas> */}
-          <Line options={options} data={data} />;
+          <Line options={options} data={data} />
         </section>
       </section>
     </main>
