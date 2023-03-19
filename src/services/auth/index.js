@@ -25,8 +25,6 @@ export const login = async (userData) => {
     jsCookie.set("userDataToken", token);
   }
 
-  console.log("login", response.data);
-
   return response.data;
 };
 

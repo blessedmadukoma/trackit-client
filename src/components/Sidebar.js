@@ -11,10 +11,14 @@ import { useAuth } from "../context/Auth";
 // const Sidebar = ({ prop, active }) => {
 //   console.log(active);
 const Sidebar = () => {
-  const { handleLogout, loading } =
-    useAuth();
+  const { handleLogout, loading } = useAuth();
 
-    console.log('loading', loading);
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    handleLogout();
+  };
+
+  console.log('loading', loading);
 
   return (
     <main className="flex h-screen flex-col justify-between border-r-[1px]">
@@ -78,10 +82,10 @@ const Sidebar = () => {
             </div>
           </Link>
 
-          <div className="mt-2 flex items-center rounded-lg py-3 px-8">
+          <div className="mt-2 flex items-center rounded-lg py-3 px-8" onClick={handleLogoutClick}>
             <RiLogoutCircleRFill className="mr-2" />
             {/* <p className="mr-2">Logout</p> */}
-            <button className="mr-2" onClick={() => {handleLogout}}>{loading ? "Logging out..." : "Logout"}</button>
+            <button className="mr-2" >{loading ? "Logging out..." : "Logout"}</button>
           </div>
         </div>
       </section>

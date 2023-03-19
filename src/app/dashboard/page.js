@@ -15,6 +15,8 @@ import {
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import { useAuth } from "../../context/Auth";
+import toast from "react-hot-toast";
+// import { useRouter } from "next/navigation";
 
 ChartJS.register(
   CategoryScale,
@@ -28,6 +30,8 @@ ChartJS.register(
 );
 
 export default function Home() {
+  // const router = useRouter();
+
   const options = {
     responsive: true,
     plugins: {

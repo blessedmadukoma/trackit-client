@@ -1,6 +1,41 @@
+"use client";
 import Link from "next/link";
+import { useAuth } from "@/src/context/Auth";
+import { useState } from "react";
 
-const LogIn = () => {
+const Register = () => {
+  const { handleRegister, loading } = useAuth();
+
+  const [userFormData, setUserFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  
+  const { firstname, lastname, email, phone, password } = userFormData;
+  
+  const registerForm = new FormData();
+  registerForm.append("firstname", firstname);
+  registerForm.append("lastname", lastname);
+  registerForm.append("email", email);
+  registerForm.append("phone", phone);
+  registerForm.append("password", password);
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegister(registerForm);
+    console.log("user:", userFormData);
+  }
+  
+  const handleInputChange = (e) => {
+    setUserFormData({
+      ...userFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <main className="mt-5 flex max-h-screen w-full items-center justify-center p-8">
       {/* left side */}
@@ -32,13 +67,16 @@ const LogIn = () => {
           </h4>
         </div>
 
+        <form className="items-center space-y-10" onSubmit={handleSubmit}>
         <div>
           <input
             type="text"
             id="firstname"
             name="firstname"
             placeholder="First Name"
-            className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
+            value={firstname}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -49,6 +87,8 @@ const LogIn = () => {
             name="lastname"
             placeholder="Last Name"
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            value={lastname}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -59,6 +99,8 @@ const LogIn = () => {
             name="email"
             placeholder="Email Address"
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            value={email} 
+            onChange={handleInputChange}
           />
         </div>
 
@@ -69,6 +111,8 @@ const LogIn = () => {
             name="phone"
             placeholder="Phone Number"
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            value={phone}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -79,6 +123,8 @@ const LogIn = () => {
             name="password"
             placeholder="Password"
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            value={password}
+            onChange={handleInputChange}
           />
         </div>
 
@@ -102,9 +148,10 @@ const LogIn = () => {
         <button className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white">
           Register
         </button>
+      </form>
       </section>
     </main>
   );
 };
 
-export default LogIn;
+export default Register;

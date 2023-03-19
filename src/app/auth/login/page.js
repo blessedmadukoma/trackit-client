@@ -22,16 +22,9 @@ const LogIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setLoading(true);
     handleLogin(loginForm);
-    // console.log(loading);
-    // setLoading(false);
-    // console.log(loading);
     console.log("user:", userFormData);
-  console.log('loading', loading)
-
   };
-  console.log('loading', loading)
 
   const handleInputChange = (e) => {
     setUserFormData({

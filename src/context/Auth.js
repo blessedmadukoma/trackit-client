@@ -22,26 +22,35 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const success = (text) => {
-    messageApi.open({
-      type: "success",
-      content: text,
-    });
-  };
-
-  const error = (text) => {
-    messageApi.open({
-      type: "error",
-      content: text,
-    });
-  };
-
-  const warning = (text) => {
-    messageApi.open({
-      type: "warning",
-      content: text,
-    });
-  };
+  useEffect(() => {
+    const success = (text) => {
+      messageApi.open({
+        type: "success",
+        content: text,
+      });
+    };
+  
+    const error = (text) => {
+      messageApi.open({
+        type: "error",
+        content: text,
+      });
+    };
+  
+    const warning = (text) => {
+      messageApi.open({
+        type: "warning",
+        content: text,
+      });
+    };
+  
+    return () => {
+      success();
+      error();
+      warning();
+    };
+  }, [messageApi]);
+  
 
   const router = useRouter();
 
@@ -87,13 +96,13 @@ export const AuthProvider = ({ children }) => {
 
         if (errResponse.includes("expired")) {
           toast.error("User session expired😪");
-          error("User session expired");
+          message.error("User session expired");
         } else if (errResponse.includes("invalid")) {
           toast.error("User session invalid:");
-          error("User session invalid");
+          message.error("User session invalid");
         } else {
           toast.error("Unable to verify user credentials😪");
-          error("Unable to verify user credentials");
+          message.error("Unable to verify user credentials");
         }
         // switch (errResponse) {
         //   case errResponse.includes("expired"):
@@ -120,7 +129,6 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (userData) => {
     setLoading(true);
-    console.log("I am here...");
     try {
       const response = await login(userData);
 
@@ -132,7 +140,7 @@ export const AuthProvider = ({ children }) => {
     } catch (err) {
       setLoading(false);
       toast.error("Invalid credentials");
-      error("Invalid credentials");
+      message.error("Invalid credentials");
     }
     setLoading(false);
   };
@@ -142,20 +150,19 @@ export const AuthProvider = ({ children }) => {
     if (response) {
       Cookies.set("userDataToken", response.token);
       setUser(response);
-      router.push("/login");
+      router.push("auth/login");
     }
   };
 
   const handleLogout = async () => {
     setLoading(true);
-    console.log("loading..:", loading);
     await logout();
     Cookies.remove("userDataToken");
     setUser(null);
     setLoading(false);
-    toast.success("Logged out");
     router.push("../auth/login");
-    success("Logged out");
+    toast.success("Logged out");
+    message.success("Logged out");
   };
 
   //   return context provider with the value of the state in typescript
@@ -183,7 +190,7 @@ export const ProtectRoute = ({ children }) => {
   const router = useRouter();
 
   if (!isAuthenticated) {
-    router.push("/auth/login");
+    () => router.push("/auth/login");
     return null;
   }
 

@@ -1,5 +1,6 @@
 // import "./globals.css";
 import Sidebar from "../../components/Sidebar";
+import { ProtectRoute } from "../../context/Auth";
 
 export const metadata = {
   title: "TrackIT",
@@ -9,13 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   // const [active, setActive] = useState(1);
   return (
-    <html lang="en">
-      <body className="flex text-[#7C4CE0]">
-        {/* <Sidebar prop={() => setActive(active)} active={active} /> */}
-        <Sidebar />
+    <ProtectRoute>
+    <main className="flex text-[#7C4CE0]">
+    <Sidebar />
 
-        <main className="w-full flex-1 bg-[#E5E5E5]">{children}</main>
-      </body>
-    </html>
+<main className="w-full flex-1 bg-[#E5E5E5]">{children}</main>
+    </main>
+    </ProtectRoute>
   );
 }
