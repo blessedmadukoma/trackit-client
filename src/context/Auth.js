@@ -53,9 +53,9 @@ export const AuthProvider = ({ children }) => {
     const token = Cookies.get("userDataToken");
 
     if (token) {
+      toast("verifying your credentials🤔");
       console.log("Got a token in the cookies, let's see if it is valid");
       api.defaults.headers.Authorization = `Bearer ${token}`;
-      toast("verifying your credentials🤔");
       try {
         const response = await api.get(
           `auth/current_user`,
