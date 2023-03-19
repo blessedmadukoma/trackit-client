@@ -54,6 +54,7 @@ const LogIn = () => {
               className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
               value={email}
               onChange={handleInputChange}
+              autoComplete="off"
             />
           </div>
 
@@ -67,6 +68,7 @@ const LogIn = () => {
               className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
               value={password}
               onChange={handleInputChange}
+              autoComplete="off"
             />
           </div>
 

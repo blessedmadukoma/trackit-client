@@ -77,6 +77,7 @@ const Register = () => {
             className="focus:shadow-outline text-md mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
             value={firstname}
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
 
@@ -89,6 +90,7 @@ const Register = () => {
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
             value={lastname}
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
 
@@ -101,6 +103,7 @@ const Register = () => {
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
             value={email} 
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
 
@@ -113,6 +116,7 @@ const Register = () => {
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
             value={phone}
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
 
@@ -125,6 +129,7 @@ const Register = () => {
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
             value={password}
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
 
@@ -135,6 +140,7 @@ const Register = () => {
             name="confirm"
             placeholder="Confirm Password"
             className="focus:shadow-outline mt-2 h-12 w-3/4 appearance-none rounded-md border border-gray-300 p-2.5 text-md leading-normal focus:bg-white focus:outline-none"
+            autoComplete="off"
           />
         </div>
 
