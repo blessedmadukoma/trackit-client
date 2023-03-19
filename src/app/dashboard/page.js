@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { useAuth } from "../../context/Auth";
 
 ChartJS.register(
   CategoryScale,
@@ -55,13 +56,21 @@ export default function Home() {
     ],
   };
 
+  const { user, isAuthenticated } = useAuth();
+
+  const firstname =
+  user?.firstname.charAt(0).toUpperCase()
+  + user?.firstname.slice(1)
+  
+  // console.log("user:", user, isAuthenticated);
+
   return (
-    <main className="mx-12 my-5">
+    <section className="mx-12 my-5">
       <Header />
 
-      <h1 className="text-2xl font-semibold tracking-wider">Welcome, Jacob</h1>
+      <h1 className="text-2xl font-semibold tracking-wider">Welcome, {firstname}</h1>
 
-      <div className="mt-6 flex justify-center space-x-10 rounded-lg bg-white py-4 text-gray-900">
+      <section className="mt-6 flex justify-center space-x-10 rounded-lg bg-white py-4 text-gray-900">
         <section className="flex cursor-pointer flex-col items-center">
           <div className="flex h-20 w-20 justify-center rounded-full bg-red-100">
             <img src="../assets/minus.svg" alt="Expense" />
@@ -82,7 +91,7 @@ export default function Home() {
           </div>
           <span className="mt-2 block tracking-wide">Create budget</span>
         </section>
-      </div>
+      </section>
 
       {/* balance and details section */}
       <section className="mt-6 mb-10 flex space-x-6 capitalize text-gray-900">
@@ -164,6 +173,6 @@ export default function Home() {
           <Line options={options} data={data} />
         </section>
       </section>
-    </main>
+    </section>
   );
 }

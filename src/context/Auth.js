@@ -46,55 +46,73 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // async function loadUserFromCookies() {
-    //   const token = Cookies.get("konetBillingAdmin");
-
-    //   if (token) {
-    //     console.log("Got a token in the cookies, let's see if it is valid");
-    //     api.defaults.headers.Authorization = `Bearer ${token}`;
-    //     // const { data: user } = await api.get("/current_user");
-    //     const { data: user } = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_API_URL}/current_user`,
-    //       {
-    //         headers: { Authorization: "Bearer " + token },
-    //       }
-    //     );
-    //     if (user) setUser(user);
-    //     console.log("user", user);
-
-    //     user?.user_type === "admin"
-    //       ? router.push("/admin")
-    //       : user?.user_type === "client"
-    //       ? router.push("/customer")
-    //       : router.push("/login");
-    //   }
-
-    //   setLoading(false);
-    // }
     loadUserFromCookies();
   }, []);
 
   async function loadUserFromCookies() {
-    const token = Cookies.get("konetBillingAdmin");
+    const token = Cookies.get("userDataToken");
 
     if (token) {
       console.log("Got a token in the cookies, let's see if it is valid");
       api.defaults.headers.Authorization = `Bearer ${token}`;
-      // const { data: user } = await api.get("/current_user");
-      const { data: user } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/current_user`,
-        {
-          headers: { Authorization: "Bearer " + token },
-        }
-      );
-      if (user) setUser(user);
-      console.log("user", user);
+      toast("verifying your credentials🤔");
+      try {
+        const response = await api.get(
+          `auth/current_user`,
+          {
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Content-Type': 'application/json',
+              'Authorization': token,
+  
+            }
+          }
+        );
+        let data = response.data.user;
+        if (data) setUser(data);      
+        toast.success("Logged in🤩");
+  
+        // user?.user_type === "admin"
+        //   ? router.push("/admin")
+        //   : user?.user_type === "client"
+        //   ? router.push("/customer")
+        //   : router.push("/login");
+        data?.user_type == "admin" || data?.user_type == "user"
+        ? router.push("/dashboard")
+        : router.push("auth/login");
+      } catch (err) {
+        let errResponse = err?.response?.data?.error;
+        // let errStatus = err?.response?.status;
+        // console.log("error response:", errResponse, " => error status:", errStatus);
 
-      user?.user_type === "admin"
-        ? router.push("/admin")
-        : user?.user_type === "client"
-        ? router.push("/customer")
-        : router.push("/login");
+        if (errResponse.includes("expired")) {
+          toast.error("User session expired😪");
+          error("User session expired");
+        } else if (errResponse.includes("invalid")) {
+          toast.error("User session invalid:");
+          error("User session invalid");
+        } else {
+          toast.error("Unable to verify user credentials😪");
+          error("Unable to verify user credentials");
+        }
+        // switch (errResponse) {
+        //   case errResponse.includes("expired"):
+        //     console.log("expired");
+        //     toast.error("User session expired😪");
+        //     error("User session expired");
+        //     break;
+        //   case JSON.stringify(errResponse).includes("invalid"):
+        //     toast.error("User session invalid:");
+        //     error("User session invalid");
+        //     break;
+        //   default:
+        //     console.log("default");
+        //     break;
+        // }
+        Cookies.remove("userDataToken")
+        // localStorage.removeItem("userDataToken");
+        router.push("/auth/login");
+      }
     }
 
     setLoading(false);
@@ -104,11 +122,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     console.log("I am here...");
     try {
-      // // await login(userData);
-      // // await loadUserFromCookies();
-      console.log("Logged in", userData);
-      toast.success("Logged in");
+      const response = await login(userData);
+
+      setUser(response.user)
+      await loadUserFromCookies();
+      // toast.success("Logged in");
       router.push("/dashboard");
+      setLoading(false);
     } catch (err) {
       setLoading(false);
       toast.error("Invalid credentials");
@@ -120,7 +140,7 @@ export const AuthProvider = ({ children }) => {
   const handleRegister = async (userData) => {
     const response = await register(userData);
     if (response) {
-      Cookies.set("konetBillingAdmin", response.token);
+      Cookies.set("userDataToken", response.token);
       setUser(response);
       router.push("/login");
     }
@@ -128,10 +148,12 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogout = async () => {
     setLoading(true);
+    console.log("loading..:", loading);
     await logout();
-    // Cookies.remove("konetBillingAdmin");
+    Cookies.remove("userDataToken");
     setUser(null);
     setLoading(false);
+    toast.success("Logged out");
     router.push("../auth/login");
     success("Logged out");
   };

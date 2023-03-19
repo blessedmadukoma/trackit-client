@@ -6,15 +6,15 @@ import { useAuth } from "../../../context/Auth";
 const LogIn = () => {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { user, handleLogin, isAuthenticated, load } = useAuth();
+  // const [loading, setLoading] = useState(false);
+  const { user, handleLogin, isAuthenticated, loading } = useAuth();
 
-  const [formData, setFormData] = useState({
+  const [userFormData, setUserFormData] = useState({
     email: "",
     password: "",
   });
 
-  const { email, password } = formData;
+  const { email, password } = userFormData;
 
   const loginForm = new FormData();
   loginForm.append("email", email);
@@ -22,17 +22,20 @@ const LogIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     handleLogin(loginForm);
-    console.log(loading);
-    setLoading(false);
-    console.log(loading);
-    console.log("user:", formData);
+    // console.log(loading);
+    // setLoading(false);
+    // console.log(loading);
+    console.log("user:", userFormData);
+  console.log('loading', loading)
+
   };
+  console.log('loading', loading)
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
+    setUserFormData({
+      ...userFormData,
       [e.target.name]: e.target.value,
     });
   };
@@ -79,7 +82,7 @@ const LogIn = () => {
               Forgot password?
             </a>
           </div>
-
+          {/* blessedmadukoma@gmail.com, blessed100 */}
           <button
             type="submit"
             className="w-1/2 rounded-lg bg-[#7C4CE0] p-3 font-semibold tracking-wider text-white"

@@ -2,10 +2,11 @@ import jsCookie from "js-cookie";
 import api from "../../utils/api";
 
 export const register = async (userData) => {
-  const response = await api.post("/admin/signup", userData);
+  const response = await api.post("/auth/register", userData);
 
   if (response.data) {
-    localStorage.setItem("konetBillingAdmin", JSON.stringify(response.data));
+    // localStorage.setItem("userDataToken", JSON.stringify(response.data));
+    jsCookie.set("userData", JSON.stringify(response.data));
   }
 
   return response.data;
@@ -13,15 +14,15 @@ export const register = async (userData) => {
 
 export const login = async (userData) => {
   const response = await api.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+    `auth/login`,
     userData
   );
 
   const token = response.data.access_token;
 
   if (response.data) {
-    localStorage.setItem("konetBillingAdmin", JSON.stringify(response.data));
-    jsCookie.set("konetBillingAdmin", token);
+    // localStorage.setItem("userData", JSON.stringify(response.data));
+    jsCookie.set("userDataToken", token);
   }
 
   console.log("login", response.data);
@@ -30,9 +31,9 @@ export const login = async (userData) => {
 };
 
 export const logout = async () => {
-  localStorage.removeItem("konetBillingAdmin");
+  // localStorage.removeItem("userDataToken");
   //   clear from cookie
-  jsCookie.remove("konetBillingAdmin");
+  jsCookie.remove("userDataToken");
 };
 
 const authService = {

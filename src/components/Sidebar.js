@@ -14,6 +14,8 @@ const Sidebar = () => {
   const { handleLogout, loading } =
     useAuth();
 
+    console.log('loading', loading);
+
   return (
     <main className="flex h-screen flex-col justify-between border-r-[1px]">
       <section className="flex flex-col font-medium text-[#5C5C5C]">
@@ -48,28 +50,28 @@ const Sidebar = () => {
             </div>
           </Link>
 
-          <Link href="/projects">
+          <Link href="#">
             <div className="mt-2 flex items-center rounded-lg py-3 px-8">
               <MdAccountBalanceWallet className="mr-2" />
               <p>Budgets</p>
             </div>
           </Link>
 
-          <Link href="/tasks">
+          <Link href="#">
             <div className="mt-2 flex items-center rounded-lg py-3 px-8">
               <FaChartArea className="mr-2" />
               <p>Visualization</p>
             </div>
           </Link>
 
-          <Link href="/calendar">
+          <Link href="#">
             <div className="mt-2 flex items-center rounded-lg py-3 px-8">
               <TbArrowsLeftRight className="mr-2" />
               <p>Transaction</p>
             </div>
           </Link>
 
-          <Link href="/notes">
+          <Link href="#">
             <div className="mt-2 flex items-center rounded-lg py-3 px-8">
               <BsCreditCardFill className="mr-2" />
               <p>Cards</p>
@@ -79,7 +81,7 @@ const Sidebar = () => {
           <div className="mt-2 flex items-center rounded-lg py-3 px-8">
             <RiLogoutCircleRFill className="mr-2" />
             {/* <p className="mr-2">Logout</p> */}
-            <button className="mr-2" onClick={handleLogout}>{loading ? "Logging out..." : "Logout"}</button>
+            <button className="mr-2" onClick={() => {handleLogout}}>{loading ? "Logging out..." : "Logout"}</button>
           </div>
         </div>
       </section>
