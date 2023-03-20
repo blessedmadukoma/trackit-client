@@ -1,5 +1,5 @@
 "use client";
-import { useState, useContext, useEffect, createContext } from "react";
+import { useState, useContext, useEffect, createContext, useRef } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import api from "../utils/api";
@@ -29,28 +29,27 @@ export const AuthProvider = ({ children }) => {
         content: text,
       });
     };
-  
+
     const error = (text) => {
       messageApi.open({
         type: "error",
         content: text,
       });
     };
-  
+
     const warning = (text) => {
       messageApi.open({
         type: "warning",
         content: text,
       });
     };
-  
+
     return () => {
       success();
       error();
       warning();
     };
   }, [messageApi]);
-  
 
   const router = useRouter();
 
@@ -66,33 +65,27 @@ export const AuthProvider = ({ children }) => {
       console.log("Got a token in the cookies, let's see if it is valid");
       api.defaults.headers.Authorization = `Bearer ${token}`;
       try {
-        const response = await api.get(
-          `auth/current_user`,
-          {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Content-Type': 'application/json',
-              'Authorization': token,
-  
-            }
-          }
-        );
-        let data = response.data.user;
-        if (data) setUser(data);      
+        const { data: user } = await api.get(`auth/current_user`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+        // let data = user?.user;
+
+        if (user) setUser(user);
+
         toast.success("Logged in🤩");
-  
-        // user?.user_type === "admin"
-        //   ? router.push("/admin")
-        //   : user?.user_type === "client"
-        //   ? router.push("/customer")
-        //   : router.push("/login");
-        data?.user_type == "admin" || data?.user_type == "user"
-        ? router.push("/dashboard")
-        : router.push("auth/login");
+        console.log("user load", user);
+
+        // data?.user_type == "admin" || data?.user_type == "user"
+        //   ? usePreviousRoute()
+        //   : router.push("auth/login");
+
+        // user && router.push("/dashboard");
       } catch (err) {
         let errResponse = err?.response?.data?.error;
-        // let errStatus = err?.response?.status;
-        // console.log("error response:", errResponse, " => error status:", errStatus);
 
         if (errResponse.includes("expired")) {
           toast.error("User session expired😪");
@@ -104,26 +97,13 @@ export const AuthProvider = ({ children }) => {
           toast.error("Unable to verify user credentials😪");
           message.error("Unable to verify user credentials");
         }
-        // switch (errResponse) {
-        //   case errResponse.includes("expired"):
-        //     console.log("expired");
-        //     toast.error("User session expired😪");
-        //     error("User session expired");
-        //     break;
-        //   case JSON.stringify(errResponse).includes("invalid"):
-        //     toast.error("User session invalid:");
-        //     error("User session invalid");
-        //     break;
-        //   default:
-        //     console.log("default");
-        //     break;
-        // }
-        Cookies.remove("userDataToken")
+        Cookies.remove("userDataToken");
         // localStorage.removeItem("userDataToken");
         router.push("/auth/login");
       }
     }
 
+    // console.log("user load", user?.user);
     setLoading(false);
   }
 
@@ -132,15 +112,39 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await login(userData);
 
-      setUser(response.user)
+      setUser(response.user);
       await loadUserFromCookies();
       // toast.success("Logged in");
       router.push("/dashboard");
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      if (err?.message === "Network Error") {
+        toast.error("Network Error");
+        message.error("Network Error");
+        return;
+      } else if (err?.response?.status === 401) {
+        toast.error("Invalid credentials");
+        message.error("Invalid credentials");
+        return;
+      } else if (err?.response?.status === 500) {
+        toast.error("Server Error");
+        message.error("Server Error");
+        return;
+      } else if (err?.response?.status === 403) {
+        toast.error("Forbidden");
+        message.error("Forbidden");
+        return;
+      } else if (err?.response?.status === 429) {
+        toast.error("Too Many Requests");
+        message.error("Too Many Requests");
+        return;
+      }
+
+      console.log("error", err);
       toast.error("Invalid credentials");
       message.error("Invalid credentials");
+      return;
     }
     setLoading(false);
   };
@@ -195,4 +199,16 @@ export const ProtectRoute = ({ children }) => {
   }
 
   return <>{children}</>;
+};
+
+export const usePreviousRoute = () => {
+  const { asPath } = useRouter();
+
+  const ref = useRef(null);
+
+  useEffect(() => {
+    ref.current = asPath;
+  }, [asPath]);
+
+  return ref.current;
 };

@@ -62,10 +62,8 @@ export default function Home() {
 
   const { user, isAuthenticated } = useAuth();
 
-  const current_user = user?.user
-
   const firstname =
-  current_user?.firstname.charAt(0).toUpperCase() + current_user?.firstname.slice(1);
+    user?.firstname.charAt(0).toUpperCase() + user?.firstname.slice(1);
 
   // console.log("user:", user, isAuthenticated);
 

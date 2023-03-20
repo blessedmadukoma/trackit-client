@@ -16,13 +16,15 @@ const LogIn = () => {
 
   const { email, password } = userFormData;
 
-  const loginForm = new FormData();
-  loginForm.append("email", email);
-  loginForm.append("password", password);
+  // const loginForm = new FormData();
+  // loginForm.append("email", email);
+  // loginForm.append("password", password);
+
+  // console.log("user:", userFormData)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(loginForm);
+    handleLogin(userFormData);
     console.log("user:", userFormData);
   };
 

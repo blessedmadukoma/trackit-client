@@ -9,33 +9,25 @@ const Home = () => {
   const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // !user && router.push("/auth/login");
-    router.push("/auth/login");
-    // console.log("isAuthenticated:", user);
-  }, []);
+    isMobile
+      ? "TrackIT is not supported on mobile devices."
+      : !user && router.push("/auth/login");
 
+    user && router.push("/dashboard");
+
+    console.log("user:", user);
+  }, []);
   if (isMobile) {
     return (
-      <html lang="en">
-        <body>
-          <main className="grid min-h-screen place-items-center text-xs">
-            <h1>TrackIT</h1>
-            <p>TrackIT is not supported on mobile devices.</p>
-          </main>
-        </body>
-      </html>
+      <div className="grid min-h-screen place-items-center text-xs">
+        This platform is only accessible using a PC.
+      </div>
     );
   }
-
   return (
-    <html lang="en">
-      <body>
-        <main>
-          <h1>TrackIT</h1>
-          <p>Rerouting...</p>
-        </main>
-      </body>
-    </html>
+    <>
+      <div>Rerouting...</div>
+    </>
   );
 };
 
