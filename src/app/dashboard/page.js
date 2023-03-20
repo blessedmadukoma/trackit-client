@@ -15,8 +15,8 @@ import {
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import { useAuth } from "../../context/Auth";
-// import toast from "react-hot-toast";
-// import { useRouter } from "next/navigation";
+import PopModal from "@/src/components/PopModal";
+import { useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -62,12 +62,13 @@ export default function Home() {
 
   const { user, isAuthenticated } = useAuth();
 
-  const current_user = user?.user
+  const current_user = user?.user;
 
   const firstname =
-  current_user?.firstname.charAt(0).toUpperCase() + current_user?.firstname.slice(1);
+    current_user?.firstname.charAt(0).toUpperCase() +
+    current_user?.firstname.slice(1);
 
-  // console.log("user:", user, isAuthenticated);
+  const [displayPopup, setDisplayPopup] = useState([false, -1]);
 
   return (
     <section className="mx-12 my-5">
@@ -77,22 +78,30 @@ export default function Home() {
         Welcome, {firstname}
       </h1>
 
+      <PopModal
+        displayPopup={displayPopup}
+        setDisplayPopup={() => setDisplayPopup([false, -1])}
+      />
+
       <section className="mt-6 flex justify-center space-x-10 rounded-lg bg-white py-4 text-gray-900">
-        <section className="flex cursor-pointer flex-col items-center">
+        <section
+          className="flex cursor-pointer flex-col items-center"
+          onClick={() => setDisplayPopup([true, 1])}
+        >
           <div className="flex h-20 w-20 justify-center rounded-full bg-red-100">
             <img src="../assets/minus.svg" alt="Expense" />
           </div>
           <span className="mt-2 block tracking-wide ">Add expense</span>
         </section>
 
-        <section className="flex cursor-pointer flex-col items-center">
+        <section className="flex cursor-pointer flex-col items-center" onClick={() => setDisplayPopup([true, 2])}>
           <div className="flex h-20 w-20 justify-center rounded-full bg-green-100">
             <img src="../assets/plus.svg" alt="Income" />
           </div>
           <span className="mt-2 block tracking-wide">Add income</span>
         </section>
 
-        <section className="flex cursor-pointer flex-col items-center">
+        <section className="flex cursor-pointer flex-col items-center" onClick={() => setDisplayPopup([true, 3])}>
           <div className="flex h-20 w-20 justify-center rounded-full bg-blue-100">
             <img src="../assets/wallet.svg" alt="Budget" />
           </div>
