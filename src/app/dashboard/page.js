@@ -17,6 +17,7 @@ import { faker } from "@faker-js/faker";
 import { useAuth } from "../../context/Auth";
 import PopModal from "@/src/components/PopModal";
 import { useState } from "react";
+import TestModal from "@/src/components/TestModal";
 
 ChartJS.register(
   CategoryScale,
@@ -68,7 +69,10 @@ export default function Home() {
     current_user?.firstname.charAt(0).toUpperCase() +
     current_user?.firstname.slice(1);
 
-  const [displayPopup, setDisplayPopup] = useState([false, -1]);
+  // const [displayPopup, setDisplayPopup] = useState([false, -1]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [index, setIndex] = useState(-1);
 
   return (
     <section className="mx-12 my-5">
@@ -78,15 +82,21 @@ export default function Home() {
         Welcome, {firstname}
       </h1>
 
-      <PopModal
+      {/* <PopModal
         displayPopup={displayPopup}
         setDisplayPopup={() => setDisplayPopup([false, -1])}
-      />
+      /> */}
+
+      <TestModal isVisible={showModal} onClose={() => setShowModal(false)} index={index} />
 
       <section className="mt-6 flex justify-center space-x-10 rounded-lg bg-white py-4 text-gray-900">
         <section
           className="flex cursor-pointer flex-col items-center"
-          onClick={() => setDisplayPopup([true, 1])}
+          // onClick={() => setDisplayPopup([true, 1])}
+          onClick={() => {
+            setShowModal(true);
+            setIndex(0);
+          }}
         >
           <div className="flex h-20 w-20 justify-center rounded-full bg-red-100">
             <img src="../assets/minus.svg" alt="Expense" />
@@ -94,14 +104,28 @@ export default function Home() {
           <span className="mt-2 block tracking-wide ">Add expense</span>
         </section>
 
-        <section className="flex cursor-pointer flex-col items-center" onClick={() => setDisplayPopup([true, 2])}>
+        <section
+          className="flex cursor-pointer flex-col items-center"
+          // onClick={() => setDisplayPopup([true, 2])}
+          onClick={() => {
+            setShowModal(true);
+            setIndex(1);
+          }}
+        >
           <div className="flex h-20 w-20 justify-center rounded-full bg-green-100">
             <img src="../assets/plus.svg" alt="Income" />
           </div>
           <span className="mt-2 block tracking-wide">Add income</span>
         </section>
 
-        <section className="flex cursor-pointer flex-col items-center" onClick={() => setDisplayPopup([true, 3])}>
+        <section
+          className="flex cursor-pointer flex-col items-center"
+          // onClick={() => setDisplayPopup([true, 3])}
+          onClick={() => {
+            setShowModal(true);
+            setIndex(2);
+          }}
+        >
           <div className="flex h-20 w-20 justify-center rounded-full bg-blue-100">
             <img src="../assets/wallet.svg" alt="Budget" />
           </div>
