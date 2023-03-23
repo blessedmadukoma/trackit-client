@@ -151,22 +151,20 @@ const ExpenseModal = () => {
       return;
     }
 
-    // console.log("expenseData:", expenseData);
+    handleAddExpense(expenseData);
 
-    let responseData = handleAddExpense(expenseData);
-
-    // let { expense } = useAuth();
-
-    // console.log("response data:", responseData, " => Response:", expense);
-    // console.log("response data:", responseData);
     console.log("response data 2:", expense);
 
-    // return;
+    console.log("showSuccess:", showSuccess);
+    console.log("showError:", showError);
 
-    if (expense?.expense) {
-      setShowSuccess(true);
+    const expenseAmount = expense?.expense?.amount;
+    const expenseDescription = expense?.expense?.description;
+
+    if (expenseAmount !== "" && expenseDescription !== "") {
+      setShowSuccess(!showSuccess);
     } else {
-      setShowError(true);
+      setShowError(!showError);
     }
 
     // if successfully added to db, show success modal
