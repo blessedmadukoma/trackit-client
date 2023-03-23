@@ -98,6 +98,28 @@ const DeleteIcon = () => {
   );
 };
 
-export { SearchIcon, NotificationIcon, BudgetIcon, EditIcon, DeleteIcon };
+const SuccessIcon = () => {
+  <svg
+    width="120"
+    height="120"
+    viewBox="0 0 120 120"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M60 0C26.85 0 0 26.85 0 60C0 93.15 26.85 120 60 120C93.15 120 120 93.15 120 60C120 26.85 93.15 0 60 0ZM55.3875 94.95H45.3375L21.0375 60.9L31.095 51.525L50.3625 69.525L88.92 25.0425L98.97 32.0925L55.3875 94.95Z"
+      fill="#7C4CE0"
+    />
+  </svg>;
+};
+
+export {
+  SearchIcon,
+  NotificationIcon,
+  BudgetIcon,
+  EditIcon,
+  DeleteIcon,
+  SuccessIcon,
+};
 
 // avatar.png

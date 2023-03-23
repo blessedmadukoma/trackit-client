@@ -16,12 +16,6 @@ const LogIn = () => {
 
   const { email, password } = userFormData;
 
-  // const loginForm = new FormData();
-  // loginForm.append("email", email);
-  // loginForm.append("password", password);
-
-  // console.log("user:", userFormData)
-
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(userFormData);

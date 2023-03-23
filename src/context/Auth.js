@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import api from "../utils/api";
 import { login, register, logout } from "../services/auth";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { message } from "antd";
 
@@ -14,6 +13,7 @@ const AuthContext = createContext({
   handleLogin: () => null,
   handleRegister: () => null,
   handleLogout: () => null,
+  handleAddExpense: () => null,
   loading: false,
 });
 
@@ -21,6 +21,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+
+  const [expense, setExpense] = useState();
 
   useEffect(() => {
     const success = (text) => {
@@ -93,6 +95,9 @@ export const AuthProvider = ({ children }) => {
         } else if (errResponse.includes("invalid")) {
           toast.error("User session invalid:");
           message.error("User session invalid");
+        } else if (err?.response?.status === 500) {
+          toast.error("Server Error");
+          message.error("Server Error");
         } else {
           toast.error("Unable to verify user credentials😪");
           message.error("Unable to verify user credentials");
@@ -100,6 +105,7 @@ export const AuthProvider = ({ children }) => {
         Cookies.remove("userDataToken");
         // localStorage.removeItem("userDataToken");
         router.push("/auth/login");
+        return;
       }
     }
 
@@ -169,16 +175,71 @@ export const AuthProvider = ({ children }) => {
     message.success("Logged out");
   };
 
+  const handleAddExpense = async (expenseData) => {
+    setLoading(true);
+    try {
+      // let response = await addExpense(expenseData);
+
+      const token = Cookies.get("userDataToken");
+      api.defaults.headers.Authorization = `Bearer ${token}`;
+
+      const { data: expense } = await api.post("/user/expense", expenseData, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      // console.log("response in addexpense =>", response);
+
+      setExpense(expense);
+      console.log("response in addexpense =>", expense);
+      // return expense;
+    } catch (err) {
+      setLoading(false);
+      if (err?.message === "Network Error") {
+        toast.error("Network Error");
+        message.error("Network Error");
+        return;
+      } else if (err?.response?.status === 401) {
+        toast.error("Invalid credentials");
+        message.error("Invalid credentials");
+        return;
+      } else if (err?.response?.status === 500) {
+        toast.error("Server Error");
+        message.error("Server Error");
+        return;
+      } else if (err?.response?.status === 403) {
+        toast.error("Forbidden");
+        message.error("Forbidden");
+        return;
+      } else if (err?.response?.status === 429) {
+        toast.error("Too Many Requests");
+        message.error("Too Many Requests");
+        return;
+      }
+
+      console.log("error", err);
+      toast.error("Invalid credentials");
+      message.error("Invalid credentials");
+      return;
+    }
+    setLoading(false);
+
+    return expense;
+  };
+
   //   return context provider with the value of the state in typescript
   return (
     <AuthContext.Provider
       value={{
         isAuthenticated: !!user,
         user,
+        expense,
         handleLogin,
         handleRegister,
         handleLogout,
         loading,
+        handleAddExpense,
       }}
     >
       <Toaster position="top-center" reverseOrder={false} />
