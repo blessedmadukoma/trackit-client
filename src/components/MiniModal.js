@@ -209,7 +209,7 @@ const ExpenseModal = () => {
               id="amount"
               name="amount"
               placeholder="Enter Amount"
-              // className="focus:shadow-outline text-md h-12 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
+              className="focus:shadow-outline text-md h-12 appearance-none rounded-md border border-gray-300 p-2.5 leading-normal focus:bg-white focus:outline-none"
               value={amount}
               onChange={handleInputChange}
               autoComplete="off"
