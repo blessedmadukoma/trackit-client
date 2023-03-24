@@ -167,9 +167,6 @@ const ExpenseModal = () => {
       setShowError(!showError);
     }
 
-    // if successfully added to db, show success modal
-    // setShowSuccess(true);
-
     console.log("showSuccess:", showSuccess);
     console.log("showError:", showError);
   };
