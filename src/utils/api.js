@@ -2,9 +2,10 @@ import Axios from "axios";
 
 let urls = {
   test: process.env.NEXT_PUBLIC_API_URL,
-  development: "http://localhost:8089/api/",
-  production: "https://trackit-blessedmadukoma.koyeb.app/api/",
+  development: process.env.NEXT_PUBLIC_API_URL_DEVELOPMENT,
+  production: process.env.NEXT_PUBLIC_API_URL_PRODUCTION,
 };
+
 const api = Axios.create({
   // baseURL: urls.development,
   baseURL: urls.production,

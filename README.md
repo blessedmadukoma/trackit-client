@@ -1,38 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TrackIT - Web-Based Accountability System
 
-## Getting Started
+![TrackIT Logo](./src/favicon.ico)
 
-First, run the development server:
+TrackIT is a comprehensive web-based accountability system designed to help you gain control over your finances by tracking your income and expenses. The primary goal of TrackIT is to prevent excessive spending and promote financial responsibility.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User-Friendly Interface**: TrackIT provides an intuitive and easy-to-use interface for efficient financial tracking.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Income and Expense Tracking**: Log your income and expenses seamlessly to maintain a real-time overview of your financial status.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- **Visualizations**: Gain insights into your spending habits through interactive charts and graphs to identify areas for improvement.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **Budget Management**: Set budgets for different expense categories and receive alerts when nearing or exceeding the limits.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Secure Authentication**: Protect your financial data with secure authentication methods, ensuring your information remains confidential.
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- [**Frontend**](https://github.com/blessedmadukoma/trackit-client.git): NextJS and TailwindCSS were used to develop the responsive and dynamic user interface.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [**Backend**](https://github.com/blessedmadukoma/trackit-backend): The backend is powered by Go and uses PostgreSQL as the database for efficient data storage.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Deployment**: The application is deployed on [Vercel](vercel.com) for the frontend and [Koyeb](koyeb.com) for the backend, providing a fast and reliable user experience.
 
-## Deploy on Vercel
+## Live Demo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Experience TrackIT in action by visiting [https://trakkit.vercel.app](https://trakkit.vercel.app).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Installation
+
+To run TrackIT locally, follow these steps:
+
+1. Clone the repositories: 
+  - Frontend: `git clone https://github.com/blessedmadukoma/trackit-client.git`
+  - Backend: `git clone https://github.com/blessedmadukoma/trackit-backend.git`
+
+2. Install dependencies:
+    - Frontend
+        1. Navigate to the frontend folder: `cd trackit-client`
+        2. Install dependencies: `npm install`
+    - Backend
+        1. Navigate to the backend folder: `cd trackit-backend`
+        2. Install dependencies: `go get -u`
+
+3. Set your environmental variable by copying `.env.example` to `.env`.
+
+4. Start the backend server: `go run main.go`
+
+5. Run the frontend development server: `npm run dev`
+
+6.  Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
+
+## Core Backend Features
+
+- **User Authentication and Authorization**: Securely manage user access with authentication and authorization mechanisms.
+
+- **Budget Creation**: Allow users to create budgets for different expense categories to manage their spending.
+
+- **Income and Expenses Management**: Enable users to add and manage their income and expenses with validation for accuracy.
+
+## Contributing
+
+We welcome contributions from the community. Feel free to open issues, submit pull requests, or provide feedback to help us improve TrackIT.
+
+## License
+
+TrackIT is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+For inquiries or support, please contact [me](mailto:blessedmadukoma@gmail.com)
+
+---
+
+Thank you for choosing TrackIT! We believe in promoting financial accountability for a brighter financial future.
